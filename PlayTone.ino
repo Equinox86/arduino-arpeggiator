@@ -5,7 +5,8 @@ void playTone(int tone_, int duration) {
   if (tone_ > 0) { // if this isn't a Rest beat, while the tone has 
     //  played less long than 'duration', pulse speaker HIGH and LOW
     while (elapsed_time < duration) {
-      
+
+      //UP
       digitalWrite(speakerOut,HIGH);
       delayMicroseconds(tone_ / 2);
 

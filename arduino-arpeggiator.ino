@@ -69,20 +69,25 @@ void loop() {
   //State 2 - Set the Key
   //State 2 - play 1 loop
   switch(state){ 
-    case 0: //waiting for valid input 
+    
+    //waiting for valid input 
+    case 0: 
       //set the encoded string based on the current keypresses
       checkIn = checkInputs();
-      if(checkIn = "000000000000" || checkIn = "100000000000" ){ 
+      if(checkIn = "000000000000" || checkIn = "000000000001" ){ 
         //Do Nothing
       }
       else {state+=1;}
       break;
-      
-     case 1: //Set the Melody
+     
+     //Set the Melody
+     case 1: 
+        playMelody = setMelody(checkIn);
         state+=1;
      break;
-     
-     case 2: //Play 1 Arpegiator Loop
+    
+    //Play 1 Arpegiator Loop
+     case 2: 
         state=0;
      break;
   }
