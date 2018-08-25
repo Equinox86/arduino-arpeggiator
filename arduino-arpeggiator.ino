@@ -2,18 +2,18 @@
 // TONES  ==========================================
 // Start by defining the relationship between
 //       note, period, &  frequency.
-#define  c     3831    // 523 Hz 
-#define  cs    3610     // 554 Hz
-#define  d     3401    // 587 Hz 
-#define  ds    3215    // 622 Hz
-#define  e     3040    // 329 Hz 
-#define  f     2865    // 349 Hz 
-#define  fs    2703
-#define  g     2558    // 392 Hz 
-#define  gs    2410
-#define  a     2273    // 440 Hz 
-#define  as    2146    // 466 Hz
-#define  b     2024    // 493 Hz 
+#define  c     3831    // 261 Hz
+#define  cs    3610    // 
+#define  d     3401    //  
+#define  ds    3215    // 
+#define  e     3040    //  
+#define  f     2865    //  
+#define  fs    2703    //
+#define  g     2558    // 
+#define  gs    2410    //
+#define  a     2273    //  
+#define  as    2146    // 
+#define  b     2024    //  
 
 #define cKey = 2;
 #define csKey = 3;
@@ -28,7 +28,7 @@
 #define asKey = A0;
 #define bKey = A1;
 #define majMin = A2;
-// Define a special note, 'R', to represent a rest
+// Define a special note, 'R', to represent a restb
 #define  R     0
 
 // SETUP ============================================
@@ -60,7 +60,7 @@ long tempo = 10000;
 // Set length of pause between notes
 int pause = 1000;
 //Boolean to validate the input
-String checkIn = "0000000000000";
+String checkIn = "00";
 
 
 void loop() {
@@ -74,7 +74,7 @@ void loop() {
     case 0: 
       //set the encoded string based on the current keypresses
       checkIn = checkInputs();
-      if(checkIn = "000000000000" || checkIn = "000000000001" ){ 
+      if(checkIn = "00" || checkIn = "01" ){ 
         //Do Nothing
       }
       else {state+=1;}
@@ -82,7 +82,7 @@ void loop() {
      
      //Set the Melody
      case 1: 
-        playMelody = setMelody(checkIn);
+        playMelody = setMelody(checkIn, octave);
         state+=1;
      break;
     
