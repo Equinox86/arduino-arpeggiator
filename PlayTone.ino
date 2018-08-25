@@ -1,6 +1,6 @@
 // PLAY TONE  ==============================================
 // Pulse the speaker to play a tone for a particular duration
-void playTone() {
+void playTone(int tone_, int duration) {
   long elapsed_time = 0;
   if (tone_ > 0) { // if this isn't a Rest beat, while the tone has 
     //  played less long than 'duration', pulse speaker HIGH and LOW

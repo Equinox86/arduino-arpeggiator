@@ -14,6 +14,20 @@
 #define  a     2273    // 440 Hz 
 #define  as    2146    // 466 Hz
 #define  b     2024    // 493 Hz 
+
+#define cKey = 2;
+#define csKey = 3;
+#define dKey = 4;
+#define dsKey = 5;
+#define eKey = 6;
+#define fKey = 7;
+#define fsKey = 8;
+#define gKey = 10;
+#define gsKey = 11;
+#define aKey = 12;
+#define asKey = A0;
+#define bKey = A1;
+#define majMin = A2;
 // Define a special note, 'R', to represent a rest
 #define  R     0
 
@@ -22,37 +36,18 @@
 int octave = 1;
 int speakerOut = 9;
 //Setup all of the base keys - we will need to use two of the analog inputs as digital inputs
-int cKey = 2;
-int csKey = 3;
-int dKey = 4;
-int dsKey = 5;
-int eKey = 6;
-int fKey = 7;
-int fsKey = 8;
-int gKey = 10;
-int gsKey = 11;
-int aKey = 12;
-int asKey = A0;
-int bKey = A1;
-int majMin = A2;
 
+
+//input array for processing
+int[] inputPins = {cKey, csKey, dKey, dsKey, eKey, fKey, fsKey, gKey, gsKey, aKey, asKey, bKey, majMin} ;
 // Do we want debugging on serial out? 1 for yes, 0 for no
 int DEBUG = 1;
 
 void setup() {
   pinMode(speakerOut, OUTPUT);
-  pinMode(cKey, INPUT);
-  pinMode(csKey, INPUT);
-  pinMode(dKey, INPUT);
-  pinMode(dsKey, INPUT);
-  pinMode(eKey, INPUT);
-  pinMode(fKey, INPUT);
-  pinMode(fsKey, INPUT);
-  pinMode(gKey, INPUT);
-  pinMode(gsKey, INPUT);
-  pinMode(aKey, INPUT);
-  pinMode(asKey, INPUT);
-  pinMode(bKey, INPUT);
+  for(int i = 0; inputPins.size()){
+    pinMode(inputPins[i], INPUT);
+  }
   if (DEBUG) {
     Serial.begin(9600); // Set serial out if we want debugging
   }
@@ -65,7 +60,7 @@ long tempo = 10000;
 // Set length of pause between notes
 int pause = 1000;
 //Boolean to validate the input
-String checkIn = "0000000000000" 
+String checkIn = "0000000000000";
 
 
 void loop() {
@@ -75,15 +70,20 @@ void loop() {
   //State 2 - play 1 loop
   switch(state){ 
     case 0: //waiting for valid input 
-      if(CheckIn = "000000000000" || CheckIn = "100000000000" ){ 
+      //set the encoded string based on the current keypresses
+      checkIn = checkInputs();
+      if(checkIn = "000000000000" || checkIn = "100000000000" ){ 
         //Do Nothing
       }
-      else {
-        state+=1; 
-        break;
-      }
+      else {state+=1;}
+      break;
+      
      case 1: //Set the Melody
+        state+=1;
+     break;
      
+     case 2: //Play 1 Arpegiator Loop
+        state=0;
      break;
   }
 }
