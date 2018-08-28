@@ -13,14 +13,15 @@ void checkInputs(){
 
 void setMelody () { 
  	//Major Keys
-   Serial.println(minorKey);
  	if(minorKey == false) { 
  		switch(keyCode){
 			case 1:setKeyArray(c,d,e,f,g,a,b);break;
-			case 2:setKeyArray(cs,ds,f,fs,gs,as,c);break;
-			case 3:setKeyArray(d,e,fs,g,a,b,cs);break;
-			//case '4':setKeyArray(e,fs,gs,a,b,cs,ds);break;
-			//case '5':setKeyArray(f,g,a,as,c,d,e);break;
+			case 2:setKeyArray(cs,ds,f,fs,gs,as,c/2);break;
+			case 3:setKeyArray(d,e,fs,g,a,b,cs/2);break;
+      case 4:setKeyArray(ds,f,g,gs,as,c/2,d/2); break;
+			case 5:setKeyArray(e,fs,gs,a,b,cs/2,ds/2);break;
+			case 6:setKeyArray(f,g,a,as,c/2,d/2,e/2);break;
+     
 			//case '6'setKeyArray(f,g,a,as,c,d,e);break;
 			//case '7':setKeyArray(fs,gs,as,b,cs,ds,f);break;
 			//case '8':setKeyArray(g,a,b,c,d,e,fs);break;
@@ -31,10 +32,10 @@ void setMelody () {
  	} else { 
       switch(keyCode){
       case 1:setKeyArray(c,d,ds,f,g,gs,as);break;
-      case 2:setKeyArray(cs,ds,f,fs,gs,as,c);break;
-      case 3:setKeyArray(d,e,fs,g,a,b,cs);break;
-      //case '4':setKeyArray(e,fs,gs,a,b,cs,ds);break;
-      //case '5':setKeyArray(f,g,a,as,c,d,e);break;
+      case 2:setKeyArray(cs,ds,e,fs,gs,a,b);break;
+      case 3:setKeyArray(d,e,f,g,a,as,c);break;
+      case 4:setKeyArray(ds,f,fs,gs,as,b,cs/2);break;
+      case 5:setKeyArray(e,fs,g,a,b,c/2,d/2);break;
       //case '6'setKeyArray(f,g,a,as,c,d,e);break;
       //case '7':setKeyArray(fs,gs,as,b,cs,ds,f);break;
       //case '8':setKeyArray(g,a,b,c,d,e,fs);break;
@@ -45,14 +46,15 @@ void setMelody () {
 }
 
 	  //Assuming 4 key loop
+
 	melody[0] = setKeys[0];
-	melody[1] = setKeys[2];
-  melody[2] = setKeys[4];
-  melody[3] = setKeys[0]/2;
-  melody[4] = setKeys[2]/2;
-  melody[5] = setKeys[0]/2;
-  melody[6] = setKeys[4];
-  melody[7] = setKeys[2];
+	melody[1] = setKeys[1];
+  melody[2] = setKeys[2];
+  melody[3] = setKeys[4];
+  melody[4] = setKeys[0]/2;
+  melody[5] = setKeys[1]/2;
+  melody[6] = setKeys[2]/2;
+  melody[7] = setKeys[4]/2;
   
 }
 
@@ -61,16 +63,15 @@ void setMelody () {
 void playTone() {
   long elapsed_time = 0;
   if (tone_ > 0) { // if this isn't a Rest beat, while the tone has 
-    //  played less long than 'duration', pulse speaker HIGH and LOW
-    while (elapsed_time < duration) {
-
+    //  played less long than 'duration', pulse speaker HIGH and Lw
+    while (elapsed_time < duration){
       //UP
       digitalWrite(speakerOut,HIGH);
       delayMicroseconds(tone_ / 2);
 
       // DOWN
       digitalWrite(speakerOut, LOW);
-      delayMicroseconds(tone_ / 2);
+      delayMicroseconds(tone_/2);
 
       // Keep track of how long we pulsed
       elapsed_time += (tone_);

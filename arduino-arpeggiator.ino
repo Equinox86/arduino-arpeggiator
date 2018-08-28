@@ -11,6 +11,7 @@
 #define asKey  A0
 #define bKey   A1
 #define majMin A2
+#define tempoIn  A3
 
 // TONES  ==========================================
 // Start by defining the relationship between
@@ -34,7 +35,7 @@ int b   =  2024;    //
 // SETUP ============================================
 int octave = 1;
 int speakerOut = 9;
-int inputPins [] = {cKey, csKey, dKey, dsKey, eKey, fKey, fsKey, gKey, gsKey, aKey, asKey, bKey, majMin} ;
+int inputPins [] = {cKey, csKey, dKey, dsKey, eKey, fKey, fsKey, gKey, gsKey, aKey, asKey, bKey, majMin, tempoIn} ;
 int melody[8];
 //keyCode = activated Pin nbf
 int keyCode;
@@ -42,6 +43,7 @@ int keyCode;
 int setKeys[7];
 int keySet = 0;
 bool minorKey=false;
+int duty; 
 
 void setup() {
   pinMode(speakerOut, OUTPUT);
@@ -55,9 +57,9 @@ void setup() {
 //For the state machine
 int state = 0; 
 // Set overall tempo
-long tempo = 10000;
+double tempo;
 long rest_count = 100;
-long duration = 0;
+double duration = 0;
 int tone_ = 0;
 // Set length of pause between notes
 int pause = 1000;
@@ -75,6 +77,7 @@ void loop() {
     case 0: 
       //set the encoded string based on the current keypresses
       checkInputs();
+
       if(keyCode == 0 ){ 
         //Do Nothing
       }
@@ -85,12 +88,15 @@ void loop() {
     case 1: 
       setMelody();
       state+=1;
-      Serial.println(melody[3]);
+      //Serial.println(melody[3]);
     break;
     
     //Play 1 Arpegiator Loop
     case 2:
       for(int i= 0; i<8; i++){
+        //SetTempo - Max of 50000
+        tempo = (1-((double)analogRead(tempoIn)/700))*50000;
+        Serial.println(tempo);
         duration = tempo*16;
         tone_ = melody[i];
         playTone();
