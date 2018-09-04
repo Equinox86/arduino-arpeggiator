@@ -29,16 +29,16 @@ Adafruit_TrellisSet trellis =  Adafruit_TrellisSet(&matrix0);
 // SETUP ============================================
 int octave = 1;
 int speakerOut = 9;
-int melody[8];
+int melody[32];
 //keyCode = activated Pin nbf
-int keyCode;
+int keyCode=-1;
 //setKeys = 7 notes in a key for selection
 int setKeys[7];
-int keySet = 0;
+int keySet = 0;      
 bool minorKey=false;
 
 void setup() {
-  
+  //setup interrupt and begin trellis
   pinMode(INTPIN, INPUT);
   digitalWrite(INTPIN, HIGH);
   trellis.begin(0x70); 
@@ -61,41 +61,22 @@ int pause = 1000;
 //Boolean to validate the input
 
 void loop() {
-
-  // We are going to loop through the 3-state machine
-  //State 1 - Wait for valid input
-  //State 2 - Set the Key
-  //State 3 - play 1 loop
-  switch(state){ 
-//waiting for valid input 
-    case 0: 
       Serial.println("Listening");
-      checkInputs();
-      delay(30);
-      break;
-//Set the Melody
-    case 1: 
-      setMelody();
-      state+=1;
-      //Serial.println(melody[3]);
-    break;
-    
-//Play 1 Arpegiator Loop3
-    case 2:
-      for(int i= 0; i<8; i++){
-        //SetTempo - Max of 50000
-        //tempo = (1-((double)analogRead(tempoIn)/700))*50000;
-        tempo = 10000;
-        Serial.println(tone_);
-        duration = tempo*16;
-        tone_ = melody[i];
-        playTone();
-       // delayMicroseconds(pause);
+      if(keyCode == -1){
+        checkInputs();
       }
-      trellis.clrLED(keyCode);
-      trellis.writeDisplay();
-      //Reset State and KeyCode
-     state=0;  
-    break;
+      else { 
+      setMelody();
+      for(int i= 0; i<32; i++){
+          //SetTempo - Max of 50000
+          //tempo = (1-((double)analogRead(tempoIn)/700))*50000;
+          tempo = 10000;
+          //Serial.println(tone_);
+          duration = tempo*16;
+          tone_ = melody[i];
+          playTone();
+          checkInputs();
+          // delayMicroseconds(pause);
+        }
+      }
   }
-}
