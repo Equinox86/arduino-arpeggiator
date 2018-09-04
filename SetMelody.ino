@@ -1,5 +1,6 @@
 void checkInputs(){ 
    //determine which key is held and put the result into result String (TODO: make a dimensional array instead of string)
+   state=0;
    for( int i = 0; i < 11; i++) {
       if (digitalRead(inputPins[i]) == 1) {keyCode = i+1;}
   }
